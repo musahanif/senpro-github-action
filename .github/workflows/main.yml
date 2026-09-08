@@ -11,11 +11,33 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-      - uses: actions/checkout@v4
-      - name: Testing Build pre-Deploy
-        uses: actions/setup-node@v4
+      - name: Build app on VM
+        uses: appleboy/ssh-action@master
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm install
-      - run: npm run build
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          script: |
+            eval "$(ssh-agent -s)"
+            ssh-add ~./ssh/<<KEY_NAME_FROM_TA>>
+            echo :Check project folder:;
+            [ ! -d "${HOME}/senpro/<<NIU>>modul02/senpro-github-action/"] &&
+             {
+              echo "Repository has not bee cloned. Cloning...";
+              mkdir -p ~senpro/<<NIU>>/modul02;
+              cd ~/senpro/<<NIU>>/modul02;
+              git clone <<FORM_REPOSITORY_LINK>>;
+              cd ~/senpro/<<NIU>>/modul02/senpro-github-action;
+              echo "Install Packages and Build Project";
+              npm install;
+              npm run build;
+              } ||
+               {
+                echo "Repository already exists. Building...";
+                cd ~/senpro/<<NIU>>/modul02/senpro-github-action;
+                git restore .;
+                git pull origin main;
+                echo "Install Packages and Build Project";
+                npm install;
+                npm run build;
+              }
