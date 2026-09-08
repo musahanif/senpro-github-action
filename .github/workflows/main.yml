@@ -26,8 +26,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-     matrix:
-      node-version: [16.x]
+      matrix:
+        node-version: [16.x]
     steps:
       - name: Build app on VM
         uses: appleboy/ssh-action@master
@@ -38,7 +38,7 @@ jobs:
           script: |
             eval "$(ssh-agent -s)"
             ssh-add ~./ssh/ssh-praktikan89
-            echo :Check project folder:;
+            echo "Check project folder";
             [ ! -d "${HOME}/senpro/533080/modul02/senpro-github-action/"] &&
              {
               echo "Repository has not bee cloned. Cloning...";
