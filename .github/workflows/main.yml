@@ -19,22 +19,22 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           script: |
             eval "$(ssh-agent -s)"
-            ssh-add ~./ssh/<<ssh-praktikan89>>
+            ssh-add ~./ssh/ssh-praktikan89
             echo :Check project folder:;
-            [ ! -d "${HOME}/senpro/<<NIU>>modul02/senpro-github-action/"] &&
+            [ ! -d "${HOME}/senpro/533080/modul02/senpro-github-action/"] &&
              {
               echo "Repository has not bee cloned. Cloning...";
-              mkdir -p ~senpro/<<NIU>>/modul02;
-              cd ~/senpro/<<NIU>>/modul02;
-              git clone <<FORM_REPOSITORY_LINK>>;
-              cd ~/senpro/<<NIU>>/modul02/senpro-github-action;
+              mkdir -p ~senpro/533080/modul02;
+              cd ~/senpro/533080/modul02;
+              git clone https://github.com/musahanif/senpro-github-action.git;
+              cd ~/senpro/533080/modul02/senpro-github-action;
               echo "Install Packages and Build Project";
               npm install;
               npm run build;
               } ||
                {
                 echo "Repository already exists. Building...";
-                cd ~/senpro/<<NIU>>/modul02/senpro-github-action;
+                cd ~/senpro/533080/modul02/senpro-github-action;
                 git restore .;
                 git pull origin main;
                 echo "Install Packages and Build Project";
