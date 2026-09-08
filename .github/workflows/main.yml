@@ -19,7 +19,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           script: |
             eval "$(ssh-agent -s)"
-            ssh-add ~./ssh/<<KEY_NAME_FROM_TA>>
+            ssh-add ~./ssh/<<ssh-praktikan89>>
             echo :Check project folder:;
             [ ! -d "${HOME}/senpro/<<NIU>>modul02/senpro-github-action/"] &&
              {
